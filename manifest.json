@@ -1,0 +1,16 @@
+{
+  "name": "الاستعلام عن رصيد يمن 4G",
+  "short_name": "الاستعلام عن رصيد يمن فور جي",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#004aad",
+  "theme_color": "#004aad",
+  "icons": [
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

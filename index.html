@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>YEMEN 4G - الاستعلام عن رصيد باقات</title>
+    
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#004aad">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #004aad;
+            --main-gradient: linear-gradient(135deg, #004aad 0%, #001e46 100%);
+            --bg: #ffffff;
+        }
+
+        * {
+            margin: 0; padding: 0; box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
+            user-select: none; -webkit-user-select: none;
+            touch-action: pan-y;
+        }
+
+        body { background: var(--bg); height: 100vh; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+
+        #splash {
+            position: fixed; inset: 0; background: var(--main-gradient);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            z-index: 10000; transition: 0.8s cubic-bezier(0.65, 0, 0.35, 1);
+        }
+
+        .loader {
+            width: 45px; height: 45px; border: 4px solid rgba(255,255,255,0.1);
+            border-top: 4px solid #fff; border-radius: 50%;
+            animation: spin 1s linear infinite; margin-top: 20px;
+        }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        #app-ui { width: 90%; max-width: 400px; text-align: center; display: block; opacity: 0; transform: translateY(20px); transition: 0.8s; }
+        #app-ui.visible { opacity: 1; transform: translateY(0); }
+
+        .logo-box { width: 120px; height: 120px; margin: 0 auto 25px; border-radius: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); content: url('icon-512.png'); }
+
+        h1 { color: #002d6a; font-size: 1.6rem; margin-bottom: 8px; font-weight: 900; }
+        h2 { color: #00b4d8; font-size: 1rem; margin-bottom: 20px; font-weight: 700; }
+        p { color: #666; font-size: 0.95rem; line-height: 1.7; margin-bottom: 35px; }
+
+        .btn-start {
+            background: var(--main-gradient); color: white; border: none; padding: 18px;
+            width: 100%; border-radius: 20px; font-weight: 700; font-size: 1.2rem;
+            box-shadow: 0 10px 25px rgba(0,74,173,0.3); cursor: pointer; transition: 0.3s;
+        }
+        .btn-start:active { transform: scale(0.96); opacity: 0.9; }
+
+        #error-overlay {
+            position: fixed; inset: 0; background: white; z-index: 9000;
+            display: none; flex-direction: column; align-items: center; justify-content: center;
+            padding: 30px; text-align: center;
+        }
+        .error-circle { width: 110px; height: 110px; background: #fff5f5; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 50px; margin-bottom: 25px; border: 4px solid #ffebeb; }
+        .retry-link { margin-top: 25px; color: var(--primary); font-weight: 700; cursor: pointer; text-decoration: underline; font-size: 1.1rem; }
+
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-10px); } 75% { transform: translateX(10px); } }
+
+        /* مواقع التواصل */
+        .social { display: flex; gap: 20px; justify-content: center; margin-top: 40px; border-top: 1px solid #eee; padding-top: 30px; }
+        .social-icon { width: 50px; height: 50px; border-radius: 15px; display: flex; align-items: center; justify-content: center; transition: 0.3s; }
+        .social-icon:active { transform: scale(0.9); }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+
+    <div id="splash">
+        <div style="background:white; padding:15px; border-radius:20px; margin-bottom:10px;">
+            <h1 style="color:var(--primary); font-size: 1.8rem;">YEMEN 4G</h1>
+        </div>
+        <div class="loader"></div>
+    </div>
+
+    <main id="app-ui">
+        <div class="logo-box"></div>
+        <h1>الاستعلام عن رصيد يمن 4G</h1>
+        <h2>مرحباً بك في تطبيق الاستعلام الذكي</h2>
+        <p>بوابتك السريعة للاستعلام عن رصيد الباقات واستهلاك الإنترنت بكل سهولة وموثوقية.</p>
+        
+        <button class="btn-start" id="main-btn" onclick="handleRedirection()">بدء الاستعلام</button>
+
+        <div class="social">
+            <a href="fb://facewebmodal/f?href=https://www.facebook.com/share/1C3eEtftYM/" class="social-icon" style="background:#1877f2;">
+                <svg width="28" height="28" fill="white" viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/></svg>
+            </a>
+            <a href="tg://resolve?domain=apps_alfaqih" class="social-icon" style="background:#24A1DE;">
+                <svg width="28" height="28" fill="white" viewBox="0 0 24 24"><path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.14-.357.223-.548.223l.188-2.85 5.18-4.68c.225-.198-.049-.307-.346-.11l-6.4 4.03-2.768-.868c-.604-.19-.612-.604.124-.896l10.81-4.17c.5-.185.938.114.73.91z"/></svg>
+            </a>
+        </div>
+    </main>
+
+    <div id="error-overlay">
+        <div class="error-circle" id="error-icon">🇾🇪</div>
+        <h2 style="color: #2d3436; margin-bottom: 10px;">عذراً، تعذر الاتصال بالبوابة</h2>
+        <p style="color: #666; max-width: 280px;">يبدو أن الموقع الرسمي لا يستجيب حالياً أو أن اتصالك بالإنترنت ضعيف او انك خارج الأراضي اليمنيه.</p>
+        <button class="btn-start" style="margin-top: 30px; max-width: 250px;" onclick="handleRedirection()">إعادة المحاولة</button>
+        <div class="retry-link" onclick="backToHome()">العودة للرئيسية</div>
+    </div>
+
+    <script>
+        window.addEventListener('load', () => {
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('sw.js').catch(err => console.log("SW Error", err));
+            }
+            setTimeout(() => {
+                const splash = document.getElementById('splash');
+                splash.style.transform = 'translateY(-100%)';
+                document.getElementById('app-ui').classList.add('visible');
+            }, 2500);
+        });
+
+        function triggerVibration() {
+            if ("vibrate" in navigator) navigator.vibrate([100, 50, 100]);
+        }
+
+        function backToHome() {
+            document.getElementById('error-overlay').style.display = 'none';
+            const appUi = document.getElementById('app-ui');
+            appUi.style.display = 'block';
+            setTimeout(() => appUi.classList.add('visible'), 10);
+            document.getElementById('main-btn').innerText = "بدء الاستعلام";
+        }
+
+        async function handleRedirection() {
+            const btn = document.getElementById('main-btn');
+            const targetUrl = "https://ptc.gov.ye/?page_id=9017";
+            const originalText = "بدء الاستعلام";
+            
+            btn.innerText = "جاري فحص الاتصال...";
+            btn.disabled = true;
+
+            if (!navigator.onLine) {
+                setTimeout(() => {
+                    btn.disabled = false;
+                    btn.innerText = originalText;
+                    showError();
+                }, 400);
+                return;
+            }
+
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 6000);
+
+            try {
+                const response = await fetch(targetUrl, { 
+                    mode: 'no-cors',
+                    signal: controller.signal 
+                });
+
+                window.location.href = targetUrl;
+
+            } catch (err) {
+              console.log("تم اعتراض الخطأ ومنع رسالة المتصفح");
+                btn.disabled = false;
+                btn.innerText = originalText;
+                showError();
+            } finally {
+                clearTimeout(timeoutId);
+            }
+        }
+
+        function showError() {
+            triggerVibration();
+            document.getElementById('app-ui').style.display = 'none';
+            const errorOverlay = document.getElementById('error-overlay');
+            errorOverlay.style.display = 'flex';
+            document.getElementById('error-icon').style.animation = 'shake 0.5s ease-in-out';
+        }
+        document.addEventListener('gesturestart', (e) => e.preventDefault());
+        document.addEventListener('dblclick', (e) => e.preventDefault());
+    </script>
+</body>
+</html>
