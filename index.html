@@ -127,7 +127,7 @@
     <script>
         window.addEventListener('load', () => {
             if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.register('sw.js').catch(err => console.log("SW Error", err));
+                navigator.serviceWorker.register('serviceWorker.js').catch(err => console.log("SW Error", err));
             }
             setTimeout(() => {
                 const splash = document.getElementById('splash');
