@@ -1,5 +1,5 @@
-const CACHE_NAME = 'yemen4g-ultimate-v1';
-const OFFLINE_URL = 'index.html', 'https://ptc.gov.ye/?page_id=9017', 'manifest.json', 'icon-512.png', 'icon-192.png';
+const CACHE_NAME = 'yemen4g-ultimate-v2';
+const OFFLINE_URL = 'index.html', 'https://ptc.gov.ye/?page_id=9017', 'manifest.json', 'icon-512.png', 'icon-192.png', 'icon-300.png';
 
 self.addEventListener('install', (event) => {
     event.waitUntil(
